@@ -1,0 +1,1 @@
+ALTER TABLE invitesignup ADD COLUMN expiry varbinary(32) DEFAULT NULL;
