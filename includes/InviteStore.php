@@ -24,6 +24,12 @@ class InviteStore {
 		$this->dbTable = $table;
 	}
 	
+	public function updateExpiryByEmail($email, $newExpiry) {
+		$conds = [ 'is_email' => $email, 'is_invitee IS NOT NULL' ];
+		$data = [ 'expiry' => $newExpiry ];
+		$this->db->update($this->dbTable, $data, $conds, __METHOD__);
+	}
+	
 	public function getTableName() {
         return $this->dbTable;
     }
