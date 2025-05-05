@@ -23,6 +23,10 @@ class InviteStore {
 		$this->db = $db;
 		$this->dbTable = $table;
 	}
+	
+	public function getTableName() {
+        return $this->dbTable;
+    }
 
 	public function getInvites() {
 		$fields = [ '*' ];
