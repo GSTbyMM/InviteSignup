@@ -88,7 +88,9 @@ class ApiInviteSignup extends ApiBase {
 
         file_put_contents($logFile, date('c') . " | $email | EXTEND: existingExpiry: $existingExpiry | periodSeconds: $periodSeconds | newExpiry: $newExpiry\n", FILE_APPEND);
 
-        // Update the group expiry to the extended time
+        // **CHANGED**: Remove user from group before re-adding to apply new expiry
+        $userGroupManager->removeUserFromGroup($user, $targetGroup);
+        // Re-add user with the extended expiry timestamp
         $userGroupManager->addUserToGroup($user, $targetGroup, $newExpiry);
         $this->getResult()->addValue(null, $this->getModuleName(), [
             'result'     => 'group_extended',
