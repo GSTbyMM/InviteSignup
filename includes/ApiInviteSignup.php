@@ -66,6 +66,7 @@ class ApiInviteSignup extends ApiBase {
             // (Re-)add the user to the group with the new expiry from pswiki
             // addUserToGroup will create or update the membership with the given expiry:contentReference[oaicite:3]{index=3}.
             $userGroupManager->addUserToGroup($user, $targetGroup, $expiry);
+            $store->updateExpiryByEmail($email, $expiry);
             file_put_contents($logFile, date('c') . " | $email | GROUP ADDED/RENEWED | expiry set to: $expiry\n", FILE_APPEND);
             $this->getResult()->addValue(null, $this->getModuleName(), [
                 'result' => 'group_added_or_renewed', 'expiry' => $expiry
@@ -92,6 +93,7 @@ class ApiInviteSignup extends ApiBase {
         $userGroupManager->removeUserFromGroup($user, $targetGroup);
         // Re-add user with the extended expiry timestamp
         $userGroupManager->addUserToGroup($user, $targetGroup, $newExpiry);
+        $store->updateExpiryByEmail($email, $newExpiry);
         $this->getResult()->addValue(null, $this->getModuleName(), [
             'result'     => 'group_extended',
             'old_expiry' => $existingExpiry,
