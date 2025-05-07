@@ -18,4 +18,7 @@ The extension adds a "Special:InviteSignup" special page, available to users wit
 
 == API Docs ==
 * Declare $wgInviteSignupApiSecret = '32 char secret key' in LocalSettings.php for security purposes. Use the same key as a $params['secret'] when sending request.
-* Other params are $params['email'] on which email is required to be sent and $params['expiry'] in 'YmdHis' format. 
+* Other params are $params['email'] on which email is required to be sent and $params['expiry'] in 'YmdHis' format.
+* Renewel Mechanism implemented where if the existing user (email id) triggers the same event again then:<br>
+  * If not expired, new expiry will be added beyond original expiry.<br>
+  * If expired, added again to the group with this new expiry.
